@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import br.com.caelum.ingresso.dao.FilmeDao;
 import br.com.caelum.ingresso.dao.SalaDao;
 import br.com.caelum.ingresso.dao.SessaoDao;
+import br.com.caelum.ingresso.model.Carrinho;
 import br.com.caelum.ingresso.model.ImagemCapa;
 import br.com.caelum.ingresso.model.Sessao;
 import br.com.caelum.ingresso.model.enums.TipoDeIngresso;
@@ -41,6 +42,9 @@ public class SessaoController {
 	
 	@Autowired
 	private ImdbClient client;
+	
+	@Autowired
+	private Carrinho carrinho;
 	
 	
 	@GetMapping("/admin/sessao")
@@ -85,7 +89,7 @@ public class SessaoController {
 	}
 	
 	//exercicio 5.2 (1, 3, 7)
-	@GetMapping("/sessao/{id}/lugares")
+/*	@GetMapping("/sessao/{id}/lugares")
 	public ModelAndView lugaresNaSessao(@PathVariable("id") Integer sessaoId){
 		ModelAndView modelAndView = new ModelAndView("sessao/lugares");
 		
@@ -97,6 +101,29 @@ public class SessaoController {
 		modelAndView.addObject("tiposDeIngressos",TipoDeIngresso.values());
 		
 		return modelAndView;
+	}*/
+	
+	@GetMapping("/sessao/{id}/lugares")
+	public ModelAndView lugaresNaSessao(@PathVariable("id") Integer sessaoId){
+		ModelAndView modelAndView = new ModelAndView("sessao/lugares");
+		
+		Sessao sessao = sessaoDao.findOne(sessaoId);
+		Optional<ImagemCapa> imagemCapa = client.request(sessao.getFilme(), ImagemCapa.class);
+		
+		modelAndView.addObject("sessao",sessao);
+		modelAndView.addObject("carrinho",carrinho);
+		modelAndView.addObject("imagemCapa",imagemCapa.orElse(new ImagemCapa()));
+		modelAndView.addObject("tiposDeIngressos",TipoDeIngresso.values());
+		
+		return modelAndView;
+	}
+
+	public Carrinho getCarrinho() {
+		return carrinho;
+	}
+
+	public void setCarrinho(Carrinho carrinho) {
+		this.carrinho = carrinho;
 	}
 	
 		

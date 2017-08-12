@@ -30,6 +30,22 @@ public class Ingresso {
 	@Enumerated(EnumType.STRING)
 	private TipoDeIngresso tipoDeIngresso;
 	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public TipoDeIngresso getTipoDeIngresso() {
+		return tipoDeIngresso;
+	}
+
+	public void setTipoDeIngresso(TipoDeIngresso tipoDeIngresso) {
+		this.tipoDeIngresso = tipoDeIngresso;
+	}
+
 	/**
 	* @Deprecated hibernate only
 	* */
@@ -37,10 +53,10 @@ public class Ingresso {
 		
 	}
 	
-	public Ingresso(Sessao sessao, Desconto tipoDeDesconto){
-		this.sessao = sessao;
-		this.preco = tipoDeDesconto.aplicarDescontoSobre(sessao.getPreco());
-	}
+//	public Ingresso(Sessao sessao, Desconto tipoDeDesconto){
+//		this.sessao = sessao;
+//		this.preco = tipoDeDesconto.aplicarDescontoSobre(sessao.getPreco());
+//	}
 	
 	/*public Ingresso(Sessao sessao, Desconto tipoDeDesconto, Lugar lugar){
 		this.sessao = sessao;
